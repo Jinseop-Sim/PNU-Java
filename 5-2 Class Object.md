@@ -95,3 +95,72 @@ public class TestEncapsulation {
 - Encapsulation은 Data Field에 존재하는 변수들을 외부에서 접근할 수 없도록 private으로 선언을 해버린다.
 - 따라서 사용자는 그 Class에 선언된 Methods들만 동작원리나 내부 부품을 알 필요 없이 사용할 수가 있다.
 - 그래서 Methods들은 Public으로 선언된다.
+
+## Passing Object(Class)
+>앞서 java에서 Call by reference를 구현하는 방법이 2가지가 있다고 말했었다.  
+>첫 번째는 Passing Array, 이번엔 두 번째인 Passing Object(Class)이다.  
+- Circle.java
+```java
+public class Circle{ // Instance(Object)를 생성해서 Pass 해주기 위해서 만든 Class
+    private double radius = 1;
+    private double area;
+    public Circle(){
+        area = 3.14 * radius * radius;
+    }
+    public Circle(double newRadius){
+        radius = newRadius;
+	area = 3.14 * radius * radius; 
+    }
+    public void setRadius(double newRadius){
+        radius = newRadius;
+    }
+    public double getRadius(){
+        return radius;
+    }
+    public double getArea(){
+        area = 3.14 * radius * radius;
+	return area;
+    }
+}
+```
+- TestPass.java
+```java
+public class Test{
+  public static void main(String[] args){ // main은 반드시 static으로 선언되어야한다.
+  	Circle myc = new Circle();
+	myc.setRadius(10.0);
+	System.out.println("Area : " + myc.getArea()); // setRadius로 radius가 10.0이 되었으므로, 넓이 314.0이 출력된다.
+	changeCircle(myc);
+	System.out.println("Changed Area : " + myc.getArea()); // changeCircle에서 radius가 1로 바뀌었기 때문에, 넓이 3.14가 출력된다.
+  }
+  
+  public static void changeCircle(Circle c){ // static으로 선언하지 않으면, main 함수 내에서 사용할 수가 없게 된다.
+  	c.setRadius(1); // Argument로 Object C의 주소를 넘겨받아 와서 class Circle의 method인 setRadius에 Access해서 값을 바꾸는 동작이다.
+  }
+}
+```
+
+## Array of Objects
+>앞에서 배웠던 array는 Primitive Type에 대한 array였다. (double[] a = new double[10];)  
+>이번에 배운 것은 Object type에 대한 array이다.  
+- Class로는 위의 예제에서 사용했던 Circle class를 그대로 사용한다.
+- AreaArray.java
+```java
+public class AreaArray{
+    public static void main(String[] args){
+    	Circle[] cArr; // 객체의 배열을 선언한다.
+	cArr = createCircleArray();
+	printCircleArray(cArr); // 5개의 Radius와 Area가 출력된다.
+    }
+    public static Circle[] createCircleArray(){ // 함수의 Type이 Circle[] 이어야 하는 이유는, return 값이 객체의 배열이기 때문이다.
+    	Circle[] cArr = new Circle[5];
+	for(int i = 0; i < cArr.length; i++){
+	    cArr[i] = new Circle(Math.random() * 1000); // Class에 Overloading된 Constructor을 통해 Radius를 랜덤 값으로 set하고 Area까지 계산해서 배열에 넣는다.
+	}
+	return cArr;
+    }
+    public static void printCircleArray(Circle[] cArr){
+    	for(int i = 0; i < arr.length; i++) System.out.println("Radius is : " + arr[i].getRadius() + " Area is : " + arr[i].getArea());
+    }
+}
+```
