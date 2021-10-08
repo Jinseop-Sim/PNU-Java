@@ -160,7 +160,7 @@ public class AreaArray{
 	return cArr;
     }
     public static void printCircleArray(Circle[] cArr){
-    	for(int i = 0; i < arr.length; i++) System.out.println("Radius is : " + arr[i].getRadius() + " Area is : " + arr[i].getArea());
+    	for(int i = 0; i < arr.length; i++) System.out.println("Radius is : " + cArr[i].getRadius() + " Area is : " + cArr[i].getArea());
     }
 }
 ```
