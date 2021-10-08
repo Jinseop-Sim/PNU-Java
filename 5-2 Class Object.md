@@ -72,7 +72,7 @@ public class EncapsulatedCircle {
 	public void setRadius(double newRadius) {
 		radius = (newRadius >= 0) ? newRadius : 0;
 	}
-	public static int getNumberOfObjects() { // 여기를 static으로 선언하는 이유는, main 함수가 static이기 때문에!
+	public static int getNumberOfObjects() { // 여기를 static으로 선언하는 이유는, 필드의 멤버변수가 static이기 때문에!
 		return numberOfObjects;
 	}
 	public double getArea() {
