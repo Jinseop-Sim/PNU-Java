@@ -3,7 +3,7 @@
 ## Inheritance
 >모든 Object Oriented Language의 Class 개념에는 Generation(일반화) Class의 Inheritance(상속) 기능이 존재한다.  
 <details>
-	<summary>TV.java</summary>
+	<summary>SimpleGeometricObject.java</summary>
 	<div markdown="1">
 		
 - SimpleGeometricObject.java
@@ -40,7 +40,7 @@ public class SimpleGeometricObject extends Object{
   </div>
   </details>
   <details>
-	<summary>TV.java</summary>
+	<summary>Circle.java</summary>
 	<div markdown="1">
 		
 - Circle.java
@@ -64,7 +64,7 @@ public class Circle extends SimpleGeometricObject{
 }
 ```
   </div>
-  </details>
+  </details>  
 - TestCircle.java
 ```java
 public Class TestCircle{
