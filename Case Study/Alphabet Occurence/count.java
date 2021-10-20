@@ -1,4 +1,4 @@
-public class PrimitiveTypeTest {
+public class AlphabetOccurence {
 	public static void main(String args[]) {
 		char[] chars = createArray();
 		int[] counts = countLetters(chars);
