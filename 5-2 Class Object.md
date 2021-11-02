@@ -111,5 +111,122 @@ public String toString(){ // Circle Class
 - 즉, 객체가 담고 있는 Class의 주소지에 따라서 어느 method를 참조할 것이냐가 결정되는 것이다.
 
 ## 'Super' Keyword
+> 두 Class가 상속 관계에 있을 때, Super Class의 method나 constructor을 호출할 때 이용되는 Keyword이다.  
+> Compiler은 Sub Class의 생성자가 호출될 때, 자동으로 Super() 기본 Class를 호출하도록 되어있다.  
+> 물론 Overload된 Super Class의 constructor을 실행하고 싶으면 Super(arg1, arg2)를 직접 적어 넣도록 한다.  
+
+```java
+public class Faculty extends Employee { // Employee's Subclass
+	public static void main(String[] args) {
+		new Faculty();
+	}
+	public Faculty() {
+		System.out.println("(4) Performs Faculty's tasks.");
+	}
+}
+class Employee extends Person{ // Person's Subclass
+	public Employee() {
+		this("(2) Invoke Employee's overloaded constructor.");
+		System.out.println("(3) Performs Employee's tasks.");
+	}
+	public Employee(String s) {
+		System.out.println(s);
+	}
+}
+class Person{ // Object's Subclass
+	public Person() {
+		System.out.println("(1) Performs Person's tasks.");
+	}
+}
+```
+- 위의 예시 코드를 보면, 출력이 (1) => (2) => (3) => (4) 순서대로 나온다.
+- 그 이유는 제일 하위 Class인 Faculty()의 Constructor이 호출이 되었으면,
+  - Super class인 Employee()의 기본 생성자가 자동 호출 되고,
+  - Employee()의 Super class인 Person()의 기본 생성자가 또 자동으로 호출되고,
+  - 다시 아래로 내려가며 출력코드들이 실행되기 때문이다.
+- super.method()로 Super Class내에 존재하는 Methods에 접근할 수도 있다.
+
 ## Override & Overload
-## Dynamic Binding
+- Overriding : 상위 클래스의 함수와 함수의 이름과 매개변수까지 같으나, 하위클래스에서 그 동작이 다른 것.
+- Overloading : 함수이 이름은 같으나, 매개변수와 동작이 다른 것. 상속 관계가 아니어도 사용한다.
+```java
+@Override
+public String toString(){
+    return super.toString() + "\nradius is " + radius;
+}
+```
+- 이는 특수한 경우로, Overriding한 함수의 위에 @Override라고 명시를 해주면 상위 클래스의 함수와 이름이 다르면 오류가 발생한다.
+- 개발자의 함수 이름 실수를 방지하기 위해 제공된다.
+
+## Dynamic Binding(동적 바인딩)
+> 상속 관계에서, Overriding된 함수들이 여러개 존재할 때에 어떤 것을 실행할지는 Compile time이 아닌 Runtime에 결정된다.  
+> 즉, 타입에 따라서 함수의 실행이 달라진다. 이게 바로 Dynamic Binding!  
+```java
+public class DynamicBindingDemo {
+	public static void main(String[] args) {
+		m(new GraduateStudent());
+		m(new Student());
+		m(new Person());
+		m(new Object());
+	}
+	public static void m(Object x) {
+		System.out.println(x.toString());
+	}
+}
+class GraduateStudent extends Student{
+}
+class Student extends Person{
+	public String toString() {
+		return "Student";
+	}
+}
+class Person extends Object{
+	public String toString() {
+		return "Person";
+	}
+}
+```
+- 위의 코드를 보면, 출력결과가 순서대로 Student Student Person java.lang.Object@24d46ca6이 나온다.
+- 이는 함수의 매개변수로 들어온 객체의 Type이 무엇이냐에 따라 Overriding된 toString() method에 대한 선택이 동적으로 달라졌음을 보여준다.
+
+### Casting Object & instanceof
+- Casting Object
+  - Implicit Casting
+  ```java
+  Object o = new Student();
+  m(o);
+  ```
+    - 위의 Dynamic binding의 예시를 기반으로 이 Code를 실행해보면 Student라고 결과가 나온다.
+    - Object Type이었던 객체 o에 Student() 의 주소를 넘겨주어 묵시적 형변환을 시킨 것이다.
+  - Explicit Casting
+  ```java
+  Object o = new Student();
+  Student s = o; // It doesn't work.
+  Student s = (Student) o; // It work!
+  ```
+    - 위의 예제와 유사한 Type Casting 예제이다.
+    - 위의 코드와 같이 명시적 형변환을 하지 않고 그냥 ```Student s = o;```라고 해버리면, 컴파일러는 오류를 반환한다.
+    - o가 가지고 있는 것은 Student의 주소가 맞지만, 컴파일러는 o의 Type이 Object라고 생각을 하고 있기 때문이다.
+    - 따라서 o의 Type을 명시적으로 Student로 바꿔주어야만 오류가 발생하지 않고 Type이 맞게 된다.
+- Instanceof Operator
+```java
+public class CastingDemo {
+	public static void main(String[] args) {
+		Object o1 = new subA1();
+		Object o2 = new subA2();
+		displayObject(o1); // Area : 2, Diameter : -1
+		displayObject(o2); // Area : 3, Diameter : -2
+	}
+	public static void displayObject(Object o) {
+		if (o instanceof subA1) System.out.println("subA1 : " + "Area : " + ((subA1) o).getArea() + " " + 
+				"Diameter : " + ((subA1) o).getDiameter());
+		
+		else if(o instanceof subA2) System.out.println("subA2 : " + "Area : " + ((subA2) o).getArea() + " " + 
+				"Diameter : " + ((subA2)o).getDiameter());
+	}
+}
+```
+  - instanceof 연산자는, Object instanceof Class 즉, 생성된 Object가 해당 Class의 Instance가 맞으면 True를 반환하는 연산자다.
+  - 위의 예시를 보면 o1과 o2는 서로 다른 subA1와 subA2의 주소를 갖고 있기 때문에, 서로 다른 Class의 instance가 된다.
+  - 하지만 Display 함수를 보면, ```((subA1)o).getArea();``` 와 같이 명시적 Casting을 해주고 있음을 알 수 있다.
+  - 이는 아까 말했듯이, o1과 o2가 subA1, subA2의 Instance인 것은 맞지만 Type이 Object이기 때문에 그냥은 ```getArea()```를 사용할 수 없다.
