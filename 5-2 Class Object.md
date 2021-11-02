@@ -208,6 +208,7 @@ class Person extends Object{
     - 위의 코드와 같이 명시적 형변환을 하지 않고 그냥 ```Student s = o;```라고 해버리면, 컴파일러는 오류를 반환한다.
     - o가 가지고 있는 것은 Student의 주소가 맞지만, 컴파일러는 o의 Type이 Object라고 생각을 하고 있기 때문이다.
     - 따라서 o의 Type을 명시적으로 Student로 바꿔주어야만 오류가 발생하지 않고 Type이 맞게 된다.
+    - Primitive Type일 때, ```int age = 45;```라고 선언하고 ```byte newAge = age;```라고 선언하면 오류가 나는 것과 같은 이유.
 - Instanceof Operator
 ```java
 public class CastingDemo {
@@ -226,7 +227,27 @@ public class CastingDemo {
 	}
 }
 ```
-  - instanceof 연산자는, Object instanceof Class 즉, 생성된 Object가 해당 Class의 Instance가 맞으면 True를 반환하는 연산자다.
-  - 위의 예시를 보면 o1과 o2는 서로 다른 subA1와 subA2의 주소를 갖고 있기 때문에, 서로 다른 Class의 instance가 된다.
-  - 하지만 Display 함수를 보면, ```((subA1)o).getArea();``` 와 같이 명시적 Casting을 해주고 있음을 알 수 있다.
-  - 이는 아까 말했듯이, o1과 o2가 subA1, subA2의 Instance인 것은 맞지만 Type이 Object이기 때문에 그냥은 ```getArea()```를 사용할 수 없다.
+   - instanceof 연산자는, Object instanceof Class 즉, 생성된 Object가 해당 Class의 Instance가 맞으면 True를 반환하는 연산자다.
+   - 위의 예시를 보면 o1과 o2는 서로 다른 subA1와 subA2의 주소를 갖고 있기 때문에, 서로 다른 Class의 instance가 된다.
+   - 하지만 Display 함수를 보면, ```((subA1)o).getArea();``` 와 같이 명시적 Casting을 해주고 있음을 알 수 있다.
+   - 이는 아까 말했듯이, o1과 o2가 subA1, subA2의 Instance인 것은 맞지만 Type이 Object이기 때문에 그냥은 ```getArea()```를 사용할 수 없다.  
+
+### Bonus : override equals() method.
+```java
+subA1 o3 = (subA1)o1;
+subA1 o4 = new subA1();
+System.out.println(((subA1)o1).equals(o3));
+System.out.println(((subA1)o1).equals(o4));
+public boolean equals(Object o) {
+		if (o instanceof A) return radius == ((subA1)o).radius;
+		else return this == o;
+	}
+```
+- 위와 같이 ```equals()``` method를 override 하게 되면, o3과 o4 모두 True가 나오게 된다.
+- Override 하지 않으면? o3은 true가 맞지만, o4는 false를 반환한다. 왜 그럴까?  
+![stack](https://user-images.githubusercontent.com/71700079/139842419-196e862f-83bc-4902-847e-65f4281a9532.jpg)  
+- 위의 그림을 살펴보면 o3은 o1과 같은 subA1의 Address를 가리키고, radius = 100이다.
+- 하지만 o4는 새로 만들어진 subA1의 Address를 가지며, radius = 100이다.
+- 새로 Override된 Equals는 radius를 비교해서 boolean 값을 return 하기 때문에 radius가 100으로 같으면, 이는 True를 반환한다.
+- 하지만 Override를 하지 않으면, 원래의 Equals는 객체 자체를 비교하여 return하기 때문에 서로 다른 객체인 o1과 o4는 False를 반환하게 된다.
+
