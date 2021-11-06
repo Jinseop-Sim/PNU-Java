@@ -90,7 +90,7 @@ public String toString(){
   }
 ```
 - 이 ```toString()``` method는 원래 모든 Class의 Superclass인 ```Object Class```의 것이다.
-- 하지만, ```SimpleGeometricObject```가 Object를 상속받았으므로 이를 __Overload(재정의)__ 가 가능하다. 이것이 바로 아래에서 설명할 __Polymorphism__ 이다.
+- 하지만, ```SimpleGeometricObject```가 Object를 상속받았으므로 이를 __Override(재정의)__ 가 가능하다. 이것이 바로 아래에서 설명할 __Polymorphism__ 이다.
 - 그리고 이 ```toString()```의 특이한 점은 Python의 ```__str__``` method와 같이 따로 참조하지 않아도 스스로 출력된다는 점이다.
 
 ## Polymorphism (다형성)
