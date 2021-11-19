@@ -145,6 +145,7 @@ class Person{ // Object's Subclass
   - Employee()의 Super class인 Person()의 기본 생성자가 또 자동으로 호출되고,
   - 다시 아래로 내려가며 출력코드들이 실행되기 때문이다.
 - super.method()로 Super Class내에 존재하는 Methods에 접근할 수도 있다.
+- super()와 this()는 둘 다 생성자의 제일 위에서 호출 되어야만 하는 Keyword이다. 둘 중 하나만 작동이 된다는 말이다.
 
 ## Override & Overload
 - Overriding : 상위 클래스의 함수와 함수의 이름과 매개변수까지 같으나, 하위클래스에서 그 동작이 다른 것.
