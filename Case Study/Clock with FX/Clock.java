@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
-public class javafxtext extends Application{
+public class Clock extends Application{
 	public void start(Stage primaryStage){
 		ClockPane clock = new ClockPane();
 		String timeString = clock.getHour() + ":" + clock.getMinute() + ":" + clock.getSecond();
