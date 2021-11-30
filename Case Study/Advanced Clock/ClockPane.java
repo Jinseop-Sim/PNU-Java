@@ -43,12 +43,11 @@ public class ClockPane extends Pane{
 		double clockRadius = Math.min(w, h) * 0.8 * 0.5;
 		double centerX = w/2;
 		double centerY = h/2;
-		double x_for_line = centerX + clockRadius * Math.sin(1*(2*Math.PI/60));
 		
 		Circle circle = new Circle(centerX, centerY, clockRadius);
 		circle.setFill(Color.WHITE);
 		circle.setStroke(Color.BLACK);
-		Text t12 = new Text(centerX-3, centerY - clockRadius + 22, "12");	
+		Text t12 = new Text(centerX-3, centerY - clockRadius + 22, "12");
 		Text t9 = new Text(centerX  - clockRadius + 15, centerY + 3, "9");
 		Text t3 = new Text(centerX + clockRadius - 20, centerY + 3, "3");
 		Text t6 = new Text(centerX-3, centerY + clockRadius - 15, "6");
@@ -78,18 +77,18 @@ public class ClockPane extends Pane{
 			double line_length;
 			if (i % 5 == 0) line_length = 0.9;
 			else line_length = 0.95;
-			double xOuter = centerX + clockRadius * Math.sin(i * (2 * Math.PI / 60));
-			double yOuter = centerY - clockRadius * Math.cos(i * (2 * Math.PI / 60));
-			double xInner = centerX + line_length * clockRadius * Math.sin(i * (2 * Math.PI / 60));
-			double yInner = centerY - line_length * clockRadius * Math.cos(i * (2 * Math.PI / 60));
-			getChildren().add(new Line(xOuter, yOuter, xInner, yInner));
+			double x_line_start = centerX + clockRadius * Math.sin(i * (2 * Math.PI / 60));
+			double y_line_start = centerY - clockRadius * Math.cos(i * (2 * Math.PI / 60));
+			double x_line_end = centerX + line_length * clockRadius * Math.sin(i * (2 * Math.PI / 60));
+			double y_line_end = centerY - line_length * clockRadius * Math.cos(i * (2 * Math.PI / 60));
+			getChildren().add(new Line(x_line_start, y_line_start, x_line_end, y_line_end));
 		}
 		
 		for (int i = 0; i < 12; i++) {
 			if(i == 0 || i == 3 || i == 6 || i == 9) continue;
 			double x = centerX + 0.8 * clockRadius * Math.sin(i * (2 * Math.PI / 12));
 			double y = centerY - 0.8 * clockRadius * Math.cos(i * (2 * Math.PI / 12));
-			Text text = new Text(x - 4, y + 4, ""+i);
+			Text text = new Text(x, y, ""+i);
 			getChildren().add(text);
 		}
 	}
